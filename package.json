@@ -18,7 +18,8 @@
     "db:generate": "drizzle-kit generate",
     "db:seed": "tsx scripts/seed.ts",
     "db:migrate": "drizzle-kit migrate",
-    "loc": "git ls-files | grep -vE '(lock|.db|_snapshot.json)' | xargs wc -l"
+    "loc": "git ls-files | grep -vE '(lock|.db|_snapshot.json)' | xargs wc -l",
+    "prototype:knock": "echo 'Open http://localhost:5173/prototype/knock' && react-router dev"
   },
   "dependencies": {
     "@hello-pangea/dnd": "^18.0.1",
@@ -47,6 +48,7 @@
   "devDependencies": {
     "@ai-hero/sandcastle": "^0.14.0",
     "@clack/prompts": "^1.7.0",
+    "@knocklabs/node": "^1.41.1",
     "@react-router/dev": "8.3.0",
     "@tailwindcss/vite": "^4.1.13",
     "@types/better-sqlite3": "^7.6.13",
