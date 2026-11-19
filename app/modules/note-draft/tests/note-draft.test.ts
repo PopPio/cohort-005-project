@@ -41,4 +41,13 @@ describe("describeNoteDraft", () => {
     const draft = describeNoteDraft("a".repeat(MAX_NOTE_LENGTH + 1));
     expect(draft).toMatchObject({ tooLong: true, canSave: false });
   });
+
+  it("does not count surrounding whitespace against the limit", () => {
+    const draft = describeNoteDraft(`${"a".repeat(MAX_NOTE_LENGTH)}\n`);
+    expect(draft).toMatchObject({
+      length: MAX_NOTE_LENGTH,
+      tooLong: false,
+      canSave: true,
+    });
+  });
 });
