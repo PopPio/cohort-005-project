@@ -1,8 +1,8 @@
 import { cn } from "~/lib/utils";
 
-/** The year is fixed on purpose: it was decided in issue #23, and a year
- * computed during render can differ between server and browser. */
-export const COPYRIGHT_NOTICE = "© 2026 Cadence. All rights reserved.";
+/** The year is a literal, not computed during render: a year read from the
+ * clock can differ between server and browser and break hydration. */
+const COPYRIGHT_NOTICE = "© 2026 Cadence. All rights reserved.";
 
 export function SiteFooter({ className }: { className?: string }) {
   return (
