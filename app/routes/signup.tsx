@@ -14,6 +14,7 @@ import { parseFormData } from "~/lib/validation";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Card, CardContent } from "~/components/ui/card";
+import { SiteFooter } from "~/components/site-footer";
 import { db } from "~/db";
 import { eq } from "drizzle-orm";
 import { defaultNotifications } from "~/lib/notifications.server";
@@ -104,86 +105,93 @@ export default function SignUp() {
   const redirectTo = searchParams.get("redirectTo");
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-6">
-      <div className="w-full max-w-md">
-        <div className="mb-8 text-center">
-          <Link to="/" className="text-2xl font-bold tracking-tight">
-            Cadence
-          </Link>
-          <h1 className="mt-4 text-xl font-semibold">Create your account</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Start learning today
+    <div className="flex min-h-screen flex-col bg-background">
+      <div className="flex flex-1 items-center justify-center p-6">
+        <div className="w-full max-w-md">
+          <div className="mb-8 text-center">
+            <Link to="/" className="text-2xl font-bold tracking-tight">
+              Cadence
+            </Link>
+            <h1 className="mt-4 text-xl font-semibold">Create your account</h1>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Start learning today
+            </p>
+          </div>
+
+          <Card>
+            <CardContent className="p-6">
+              <Form method="post" className="space-y-4">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="mb-1.5 block text-sm font-medium"
+                  >
+                    Name
+                  </label>
+                  <Input
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder="Your name"
+                    defaultValue={actionData?.values?.name ?? ""}
+                    aria-invalid={!!actionData?.errors?.name}
+                  />
+                  {actionData?.errors?.name && (
+                    <p className="mt-1 text-sm text-destructive">
+                      {actionData.errors.name}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="mb-1.5 block text-sm font-medium"
+                  >
+                    Email
+                  </label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    defaultValue={actionData?.values?.email ?? ""}
+                    aria-invalid={!!actionData?.errors?.email}
+                  />
+                  {actionData?.errors?.email && (
+                    <p className="mt-1 text-sm text-destructive">
+                      {actionData.errors.email}
+                    </p>
+                  )}
+                </div>
+
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Creating account..." : "Sign Up"}
+                </Button>
+              </Form>
+            </CardContent>
+          </Card>
+
+          <p className="mt-4 text-center text-sm text-muted-foreground">
+            Already have an account?{" "}
+            <Link
+              to={
+                redirectTo
+                  ? `/login?redirectTo=${encodeURIComponent(redirectTo)}`
+                  : "/login"
+              }
+              className="font-medium text-primary hover:underline"
+            >
+              Log in
+            </Link>
           </p>
         </div>
-
-        <Card>
-          <CardContent className="p-6">
-            <Form method="post" className="space-y-4">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="mb-1.5 block text-sm font-medium"
-                >
-                  Name
-                </label>
-                <Input
-                  id="name"
-                  name="name"
-                  type="text"
-                  placeholder="Your name"
-                  defaultValue={actionData?.values?.name ?? ""}
-                  aria-invalid={!!actionData?.errors?.name}
-                />
-                {actionData?.errors?.name && (
-                  <p className="mt-1 text-sm text-destructive">
-                    {actionData.errors.name}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="email"
-                  className="mb-1.5 block text-sm font-medium"
-                >
-                  Email
-                </label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  defaultValue={actionData?.values?.email ?? ""}
-                  aria-invalid={!!actionData?.errors?.email}
-                />
-                {actionData?.errors?.email && (
-                  <p className="mt-1 text-sm text-destructive">
-                    {actionData.errors.email}
-                  </p>
-                )}
-              </div>
-
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? "Creating account..." : "Sign Up"}
-              </Button>
-            </Form>
-          </CardContent>
-        </Card>
-
-        <p className="mt-4 text-center text-sm text-muted-foreground">
-          Already have an account?{" "}
-          <Link
-            to={
-              redirectTo
-                ? `/login?redirectTo=${encodeURIComponent(redirectTo)}`
-                : "/login"
-            }
-            className="font-medium text-primary hover:underline"
-          >
-            Log in
-          </Link>
-        </p>
       </div>
+      <SiteFooter />
     </div>
   );
 }
