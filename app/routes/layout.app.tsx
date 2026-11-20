@@ -2,6 +2,7 @@ import { Outlet } from "react-router";
 import type { Route } from "./+types/layout.app";
 import { Sidebar } from "~/components/sidebar";
 import { DevUI } from "~/components/dev-ui";
+import { SiteFooter } from "~/components/site-footer";
 import { NotificationFeedProvider } from "~/components/notification-feed";
 import {
   defaultNotifications,
@@ -257,8 +258,11 @@ export default function AppLayout({ loaderData }: Route.ComponentProps) {
           recentCourses={recentCourses}
           isTeamAdmin={userIsTeamAdmin}
         />
-        <main className="flex-1 overflow-y-auto">
-          <Outlet />
+        <main className="flex flex-1 flex-col overflow-y-auto">
+          <div className="flex-1">
+            <Outlet />
+          </div>
+          <SiteFooter />
         </main>
         <DevUI
           users={users}
